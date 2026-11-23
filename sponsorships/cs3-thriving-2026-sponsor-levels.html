@@ -1,0 +1,428 @@
+<!--
+  CS3 "Thriving Not Just Surviving" 2026 — Sponsorship Benefits by Level
+  ---------------------------------------------------------------------
+  Finalsite Composer: add an "Embed Code" element to the page and paste
+  this entire file into it. No JavaScript and no external files are needed.
+
+  Scoping: every rule is nested under .hcde-sponsor, and every element the
+  styles touch carries its own hs- class, so nothing here leaks onto the
+  rest of the page and the site theme's generic table/list rules can't win.
+  The layout responds to the width of the Composer column it sits in
+  (container queries), not the browser window.
+
+  Source: CS3 Thriving 2026 Sponsor Packet (FINAL).
+-->
+<style>
+.hcde-sponsor {
+  /* Design tokens: change brand colors here */
+  --hs-navy: #13294b;
+  --hs-navy-soft: #e8edf5;
+  --hs-red: #b0122b;
+  --hs-ink: #1f2933;
+  --hs-muted: #52606d;
+  --hs-line: #d3dae3;
+  --hs-surface: #ffffff;
+  --hs-highlight: #fff6e0;
+  --hs-radius: 0.75rem;
+  --hs-gap: clamp(1rem, 3cqi, 1.75rem);
+
+  container: hs-root / inline-size;
+  box-sizing: border-box;
+  max-inline-size: 72rem;
+  margin-inline: auto;
+  color: var(--hs-ink);
+  font-family: inherit;
+  line-height: 1.5;
+  text-align: start;
+
+  & :where(*, *::before, *::after) { box-sizing: inherit; }
+
+  /* Visually hidden, still read by screen readers */
+  & .hs-vh {
+    position: absolute;
+    inline-size: 1px;
+    block-size: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+
+  /* ---------- Header ---------- */
+  & .hs-header {
+    display: grid;
+    gap: 0.5rem;
+    margin-block-end: var(--hs-gap);
+  }
+  & .hs-eyebrow {
+    margin: 0;
+    color: var(--hs-red);
+    font-size: 0.875rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  & .hs-title {
+    margin: 0;
+    color: var(--hs-navy);
+    font-size: clamp(1.5rem, 4cqi, 2.25rem);
+    line-height: 1.15;
+    text-wrap: balance;
+  }
+  & .hs-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.25rem 1.5rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    color: var(--hs-muted);
+  }
+  & .hs-meta-item { margin: 0; padding: 0; }
+  & .hs-meta-item::before { content: none; }
+  & .hs-meta strong { color: var(--hs-ink); }
+
+  /* ---------- Sold-out notice ---------- */
+  & .hs-soldout {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5rem 1rem;
+    margin-block-end: 1rem;
+    padding: 0.75rem 1rem;
+    border: 1px dashed var(--hs-line);
+    border-radius: var(--hs-radius);
+    color: var(--hs-muted);
+  }
+  & .hs-soldout-name {
+    color: var(--hs-ink);
+    font-weight: 700;
+    text-decoration: line-through;
+    text-decoration-thickness: 2px;
+  }
+  & .hs-badge {
+    display: inline-block;
+    padding: 0.125rem 0.625rem;
+    border: 2px solid var(--hs-red);
+    border-radius: 999px;
+    color: var(--hs-red);
+    font-size: 0.75rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  /* ---------- Table ---------- */
+  & .hs-scroll {
+    overflow-x: auto;
+    border: 1px solid var(--hs-line);
+    border-radius: var(--hs-radius);
+    background: var(--hs-surface);
+    overscroll-behavior-x: contain;
+  }
+  & .hs-scroll:focus-visible {
+    outline: 3px solid var(--hs-navy);
+    outline-offset: 3px;
+  }
+  & .hs-table {
+    inline-size: 100%;
+    min-inline-size: 46rem;
+    margin: 0;
+    border: 0;
+    border-collapse: separate;
+    border-spacing: 0;
+    background: transparent;
+    font-size: 0.9375rem;
+  }
+  & .hs-caption {
+    padding: 0;
+    caption-side: top;
+    text-align: start;
+  }
+  & .hs-th,
+  & .hs-td {
+    margin: 0;
+    padding: 0.75rem 0.875rem;
+    border: 0;
+    border-block-end: 1px solid var(--hs-line);
+    background: var(--hs-surface);
+    vertical-align: middle;
+  }
+  & .hs-row:last-child > :is(.hs-th, .hs-td) { border-block-end: 0; }
+
+  /* Column headers: level + price */
+  & .hs-col {
+    background: var(--hs-navy);
+    color: #fff;
+    text-align: center;
+    font-weight: 700;
+    line-height: 1.2;
+  }
+  & .hs-col-corner {
+    text-align: start;
+    font-size: 0.8125rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+  & .hs-level {
+    display: block;
+    font-size: 0.8125rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+  & .hs-price {
+    display: block;
+    margin-block-start: 0.25rem;
+    font-size: 1.25rem;
+    font-variant-numeric: tabular-nums;
+  }
+  & .hs-col-top { background: var(--hs-red); }
+
+  /* Row headers: benefit name, pinned while scrolling sideways */
+  & .hs-benefit {
+    position: sticky;
+    inset-inline-start: 0;
+    z-index: 1;
+    min-inline-size: 14rem;
+    font-weight: 600;
+    text-align: start;
+    box-shadow: inset -1px 0 0 var(--hs-line);
+  }
+  & .hs-col-corner { position: sticky; inset-inline-start: 0; z-index: 2; }
+
+  & .hs-td { text-align: center; }
+  & .hs-row:nth-child(even) > :is(.hs-th, .hs-td) { background: #f8fafc; }
+  & .hs-td.hs-is-top { background: var(--hs-highlight); }
+  & .hs-row:nth-child(even) > .hs-td.hs-is-top { background: #fdf0cf; }
+
+  & .hs-yes,
+  & .hs-no {
+    display: inline-grid;
+    place-items: center;
+    inline-size: 1.75rem;
+    block-size: 1.75rem;
+    border-radius: 50%;
+  }
+  & .hs-yes { background: var(--hs-navy); color: #fff; }
+  & .hs-no { color: var(--hs-muted); }
+  & .hs-icon { inline-size: 1rem; block-size: 1rem; }
+  & .hs-detail {
+    display: inline-block;
+    padding: 0.25rem 0.5rem;
+    border-radius: 0.375rem;
+    background: var(--hs-navy-soft);
+    color: var(--hs-navy);
+    font-size: 0.8125rem;
+    font-weight: 700;
+    line-height: 1.25;
+  }
+
+  & .hs-fn-ref {
+    color: var(--hs-red);
+    font-weight: 700;
+    text-decoration: none;
+  }
+
+  /* ---------- Footer ---------- */
+  & .hs-footnote {
+    margin: 0.75rem 0 0;
+    color: var(--hs-muted);
+    font-size: 0.875rem;
+  }
+  & .hs-cta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.75rem 1.25rem;
+    margin-block-start: var(--hs-gap);
+    padding: var(--hs-gap);
+    border-radius: var(--hs-radius);
+    background: var(--hs-navy);
+    color: #fff;
+  }
+  & .hs-cta-text { flex: 1 1 20rem; margin: 0; }
+  & .hs-cta-text strong { display: block; font-size: 1.125rem; }
+  & .hs-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-block-size: 2.75rem;
+    padding: 0.625rem 1.25rem;
+    border: 2px solid #fff;
+    border-radius: 999px;
+    background: #fff;
+    color: var(--hs-navy);
+    font-weight: 700;
+    text-decoration: none;
+  }
+  & .hs-btn:hover { background: transparent; color: #fff; }
+  & .hs-btn:focus-visible { outline: 3px solid #fff; outline-offset: 3px; }
+  & .hs-link { color: #fff; text-decoration: underline; text-underline-offset: 0.2em; }
+
+  /* ---------- Narrow column / phone: one card per benefit ---------- */
+  @container hs-root (width < 40rem) {
+    & .hs-scroll { overflow: visible; border: 0; background: transparent; }
+    & .hs-table { min-inline-size: 0; }
+    & .hs-table,
+    & .hs-tbody,
+    & .hs-row,
+    & .hs-th,
+    & .hs-td { display: block; }
+    & .hs-thead { display: none; }
+
+    & .hs-row {
+      margin-block-end: 1rem;
+      overflow: hidden;
+      border: 1px solid var(--hs-line);
+      border-radius: var(--hs-radius);
+      background: var(--hs-surface);
+    }
+    & .hs-benefit {
+      position: static;
+      min-inline-size: 0;
+      padding-block: 0.875rem;
+      background: var(--hs-navy) !important;
+      color: #fff;
+      box-shadow: none;
+    }
+    & .hs-benefit .hs-fn-ref { color: inherit; }
+    & .hs-td {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      padding-block: 0.5rem;
+      background: var(--hs-surface) !important;
+      text-align: end;
+    }
+    & .hs-row > .hs-td:last-child { border-block-end: 0; }
+    & .hs-td::before {
+      content: attr(data-level);
+      color: var(--hs-ink);
+      font-weight: 600;
+      text-align: start;
+    }
+    & .hs-td.hs-is-top::before { color: var(--hs-red); }
+    & .hs-td:has(.hs-no) { color: var(--hs-muted); }
+  }
+
+  /* Windows High Contrast / forced colors */
+  @media (forced-colors: active) {
+    & .hs-yes { border: 1px solid CanvasText; }
+    & .hs-col, & .hs-benefit { border: 1px solid CanvasText; }
+  }
+
+  @media print {
+    & .hs-scroll { overflow: visible; }
+    & .hs-cta { border: 1px solid; }
+  }
+}
+</style>
+
+<section class="hcde-sponsor" aria-labelledby="hs-title">
+  <header class="hs-header">
+    <p class="hs-eyebrow">Center for Safe and Secure Schools &middot; Sponsorship Opportunities</p>
+    <h2 class="hs-title" id="hs-title">Thriving Not Just Surviving: Celebrating Professional Counselors</h2>
+    <ul class="hs-meta">
+      <li class="hs-meta-item"><strong>Wednesday, June 3, 2026</strong> &middot; 8 a.m. &ndash; 2 p.m.</li>
+      <li class="hs-meta-item">Harris County Department of Education, 6300 Irvington Blvd., Houston, TX 77022</li>
+    </ul>
+  </header>
+
+  <p class="hs-soldout">
+    <span><span class="hs-soldout-name">Underwriter &middot; $5,000</span></span>
+    <span class="hs-badge">Sold out</span>
+    <span>Thank you to our underwriter! The levels below are still available.</span>
+  </p>
+
+  <div class="hs-scroll" role="region" aria-labelledby="hs-caption" tabindex="0">
+    <table class="hs-table">
+      <caption class="hs-caption"><span class="hs-vh" id="hs-caption">Sponsorship benefits by level</span></caption>
+      <thead class="hs-thead">
+        <tr class="hs-row">
+          <th class="hs-th hs-col hs-col-corner" scope="col">Benefit</th>
+          <th class="hs-th hs-col hs-col-top" scope="col"><span class="hs-level">Platinum</span><span class="hs-price">$3,500</span></th>
+          <th class="hs-th hs-col" scope="col"><span class="hs-level">Partner</span><span class="hs-price">$2,000</span></th>
+          <th class="hs-th hs-col" scope="col"><span class="hs-level">Contributor</span><span class="hs-price">$1,000</span></th>
+          <th class="hs-th hs-col" scope="col"><span class="hs-level">Associate</span><span class="hs-price">$500</span></th>
+          <th class="hs-th hs-col" scope="col"><span class="hs-level">Nonprofits / Small Orgs</span><span class="hs-price">$350</span></th>
+        </tr>
+      </thead>
+      <tbody class="hs-tbody">
+        <tr class="hs-row">
+          <th class="hs-th hs-benefit" scope="row">Logo on event landing page</th>
+          <td class="hs-td hs-is-top" data-level="Platinum ($3,500)"><span class="hs-yes"><svg class="hs-icon" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M3 8.5 6.5 12 13 4.5" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="hs-vh">Included</span></td>
+          <td class="hs-td" data-level="Partner ($2,000)"><span class="hs-yes"><svg class="hs-icon" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M3 8.5 6.5 12 13 4.5" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="hs-vh">Included</span></td>
+          <td class="hs-td" data-level="Contributor ($1,000)"><span class="hs-yes"><svg class="hs-icon" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M3 8.5 6.5 12 13 4.5" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="hs-vh">Included</span></td>
+          <td class="hs-td" data-level="Associate ($500)"><span class="hs-yes"><svg class="hs-icon" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M3 8.5 6.5 12 13 4.5" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="hs-vh">Included</span></td>
+          <td class="hs-td" data-level="Nonprofits / Small Orgs ($350)"><span class="hs-yes"><svg class="hs-icon" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M3 8.5 6.5 12 13 4.5" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="hs-vh">Included</span></td>
+        </tr>
+        <tr class="hs-row">
+          <th class="hs-th hs-benefit" scope="row">Logo with weblink on event landing page</th>
+          <td class="hs-td hs-is-top" data-level="Platinum ($3,500)"><span class="hs-yes"><svg class="hs-icon" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M3 8.5 6.5 12 13 4.5" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="hs-vh">Included</span></td>
+          <td class="hs-td" data-level="Partner ($2,000)"><span class="hs-yes"><svg class="hs-icon" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M3 8.5 6.5 12 13 4.5" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="hs-vh">Included</span></td>
+          <td class="hs-td" data-level="Contributor ($1,000)"><span class="hs-yes"><svg class="hs-icon" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M3 8.5 6.5 12 13 4.5" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="hs-vh">Included</span></td>
+          <td class="hs-td" data-level="Associate ($500)"><span class="hs-yes"><svg class="hs-icon" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M3 8.5 6.5 12 13 4.5" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="hs-vh">Included</span></td>
+          <td class="hs-td" data-level="Nonprofits / Small Orgs ($350)"><span class="hs-no" aria-hidden="true">&mdash;</span><span class="hs-vh">Not included</span></td>
+        </tr>
+        <tr class="hs-row">
+          <th class="hs-th hs-benefit" scope="row">Exhibitor table</th>
+          <td class="hs-td hs-is-top" data-level="Platinum ($3,500)"><span class="hs-yes"><svg class="hs-icon" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M3 8.5 6.5 12 13 4.5" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="hs-vh">Included</span></td>
+          <td class="hs-td" data-level="Partner ($2,000)"><span class="hs-yes"><svg class="hs-icon" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M3 8.5 6.5 12 13 4.5" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="hs-vh">Included</span></td>
+          <td class="hs-td" data-level="Contributor ($1,000)"><span class="hs-yes"><svg class="hs-icon" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M3 8.5 6.5 12 13 4.5" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="hs-vh">Included</span></td>
+          <td class="hs-td" data-level="Associate ($500)"><span class="hs-yes"><svg class="hs-icon" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M3 8.5 6.5 12 13 4.5" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="hs-vh">Included</span></td>
+          <td class="hs-td" data-level="Nonprofits / Small Orgs ($350)"><span class="hs-yes"><svg class="hs-icon" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M3 8.5 6.5 12 13 4.5" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="hs-vh">Included</span></td>
+        </tr>
+        <tr class="hs-row">
+          <th class="hs-th hs-benefit" scope="row">Recognition during opening session</th>
+          <td class="hs-td hs-is-top" data-level="Platinum ($3,500)"><span class="hs-yes"><svg class="hs-icon" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M3 8.5 6.5 12 13 4.5" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="hs-vh">Included</span></td>
+          <td class="hs-td" data-level="Partner ($2,000)"><span class="hs-yes"><svg class="hs-icon" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M3 8.5 6.5 12 13 4.5" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="hs-vh">Included</span></td>
+          <td class="hs-td" data-level="Contributor ($1,000)"><span class="hs-yes"><svg class="hs-icon" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M3 8.5 6.5 12 13 4.5" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="hs-vh">Included</span></td>
+          <td class="hs-td" data-level="Associate ($500)"><span class="hs-yes"><svg class="hs-icon" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M3 8.5 6.5 12 13 4.5" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="hs-vh">Included</span></td>
+          <td class="hs-td" data-level="Nonprofits / Small Orgs ($350)"><span class="hs-yes"><svg class="hs-icon" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M3 8.5 6.5 12 13 4.5" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="hs-vh">Included</span></td>
+        </tr>
+        <tr class="hs-row">
+          <th class="hs-th hs-benefit" scope="row">Social media recognition</th>
+          <td class="hs-td hs-is-top" data-level="Platinum ($3,500)"><span class="hs-yes"><svg class="hs-icon" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M3 8.5 6.5 12 13 4.5" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="hs-vh">Included</span></td>
+          <td class="hs-td" data-level="Partner ($2,000)"><span class="hs-yes"><svg class="hs-icon" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M3 8.5 6.5 12 13 4.5" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="hs-vh">Included</span></td>
+          <td class="hs-td" data-level="Contributor ($1,000)"><span class="hs-yes"><svg class="hs-icon" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M3 8.5 6.5 12 13 4.5" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="hs-vh">Included</span></td>
+          <td class="hs-td" data-level="Associate ($500)"><span class="hs-yes"><svg class="hs-icon" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M3 8.5 6.5 12 13 4.5" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="hs-vh">Included</span></td>
+          <td class="hs-td" data-level="Nonprofits / Small Orgs ($350)"><span class="hs-no" aria-hidden="true">&mdash;</span><span class="hs-vh">Not included</span></td>
+        </tr>
+        <tr class="hs-row">
+          <th class="hs-th hs-benefit" scope="row">Speaking time with participants during the event</th>
+          <td class="hs-td hs-is-top" data-level="Platinum ($3,500)"><span class="hs-detail">4-minute presentation</span></td>
+          <td class="hs-td" data-level="Partner ($2,000)"><span class="hs-detail">2-minute presentation</span></td>
+          <td class="hs-td" data-level="Contributor ($1,000)"><span class="hs-detail">1-minute mention</span></td>
+          <td class="hs-td" data-level="Associate ($500)"><span class="hs-detail">30-second mention</span></td>
+          <td class="hs-td" data-level="Nonprofits / Small Orgs ($350)"><span class="hs-detail">30-second mention</span></td>
+        </tr>
+        <tr class="hs-row">
+          <th class="hs-th hs-benefit" scope="row">Company logo / webpage link in post-event email</th>
+          <td class="hs-td hs-is-top" data-level="Platinum ($3,500)"><span class="hs-yes"><svg class="hs-icon" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M3 8.5 6.5 12 13 4.5" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="hs-vh">Included</span></td>
+          <td class="hs-td" data-level="Partner ($2,000)"><span class="hs-yes"><svg class="hs-icon" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M3 8.5 6.5 12 13 4.5" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="hs-vh">Included</span></td>
+          <td class="hs-td" data-level="Contributor ($1,000)"><span class="hs-no" aria-hidden="true">&mdash;</span><span class="hs-vh">Not included</span></td>
+          <td class="hs-td" data-level="Associate ($500)"><span class="hs-no" aria-hidden="true">&mdash;</span><span class="hs-vh">Not included</span></td>
+          <td class="hs-td" data-level="Nonprofits / Small Orgs ($350)"><span class="hs-no" aria-hidden="true">&mdash;</span><span class="hs-vh">Not included</span></td>
+        </tr>
+        <tr class="hs-row">
+          <th class="hs-th hs-benefit" scope="row">Participant registration list<a class="hs-fn-ref" href="#hs-fn-1" aria-describedby="hs-fn-1">*</a></th>
+          <td class="hs-td hs-is-top" data-level="Platinum ($3,500)"><span class="hs-yes"><svg class="hs-icon" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M3 8.5 6.5 12 13 4.5" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="hs-vh">Included</span></td>
+          <td class="hs-td" data-level="Partner ($2,000)"><span class="hs-no" aria-hidden="true">&mdash;</span><span class="hs-vh">Not included</span></td>
+          <td class="hs-td" data-level="Contributor ($1,000)"><span class="hs-no" aria-hidden="true">&mdash;</span><span class="hs-vh">Not included</span></td>
+          <td class="hs-td" data-level="Associate ($500)"><span class="hs-no" aria-hidden="true">&mdash;</span><span class="hs-vh">Not included</span></td>
+          <td class="hs-td" data-level="Nonprofits / Small Orgs ($350)"><span class="hs-no" aria-hidden="true">&mdash;</span><span class="hs-vh">Not included</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p class="hs-footnote" id="hs-fn-1">* The registration list is for one-time use only. Participants registering for the event are made aware that their email address will be provided to sponsors.</p>
+
+  <div class="hs-cta">
+    <p class="hs-cta-text">
+      <strong>Ready to sponsor?</strong>
+      Email your completed sponsor form and company logo to <a class="hs-link" href="mailto:kfrazier@hcde-texas.org">kfrazier@hcde-texas.org</a>.
+    </p>
+    <a class="hs-btn" href="mailto:kfrazier@hcde-texas.org?subject=CS3%20Thriving%202026%20Sponsorship">Become a sponsor</a>
+  </div>
+</section>
